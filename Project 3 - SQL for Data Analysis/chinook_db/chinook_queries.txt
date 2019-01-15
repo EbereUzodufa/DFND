@@ -1,0 +1,40 @@
+SELECT c.City city, sum(i.Total) sum_bills
+from Invoice as i
+join Customer as c
+where i.CustomerId = c.CustomerId
+Group By city
+order by sum_bills desc
+limit 1;
+
+***Use your query to return the email, first name, last name, and Genre of all Rock Music listeners. Return your list ordered alphabetically by email address starting with A**
+
+select c.Email email, c.FirstName 'first name', c.LastName 'last name',g.Name Genre
+from Genre g
+join Track t
+	on g.GenreId = t.GenreId
+join InvoiceLine iL
+	on iL.TrackId = t.TrackId
+join Invoice i
+	on i.InvoiceId = iL.InvoiceId
+join Customer c
+	on c.CustomerId = i.CustomerId
+where g.GenreId = 1
+Group by email
+Order by email asc;
+
+***Who is writing the rock music?***
+
+select art.Name artist, count(t.TrackId) no_of_tracks
+from Track t
+join Genre g
+	on g.GenreId = t.GenreId
+join Album a
+	on a.AlbumId = t.AlbumId
+join Artist art
+	on art.ArtistId = a.ArtistId
+where g.GenreId = 1
+Group by art.ArtistId
+Order by no_of_tracks desc
+limit 10;
+
+
